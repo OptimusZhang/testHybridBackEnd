@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzoa.insurance.dao.QuestEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxzoa.insurance.entity.QuestEntity" >
+    <id column="quest_id" property="questId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="quest_type" property="questType" jdbcType="CHAR" />
+    <result column="quest_class" property="questClass" jdbcType="CHAR" />
+    <result column="quest_title" property="questTitle" jdbcType="CHAR" />
+    <result column="quest_text" property="questText" jdbcType="CHAR" />
+    <result column="anser1" property="anser1" jdbcType="CHAR" />
+    <result column="anser2" property="anser2" jdbcType="CHAR" />
+    <result column="anser3" property="anser3" jdbcType="CHAR" />
+    <result column="anser4" property="anser4" jdbcType="CHAR" />
+    <result column="option1" property="option1" jdbcType="CHAR" />
+    <result column="option2" property="option2" jdbcType="CHAR" />
+    <result column="option3" property="option3" jdbcType="CHAR" />
+    <result column="option4" property="option4" jdbcType="CHAR" />
+    <result column="disp_flag" property="dispFlag" jdbcType="CHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="CHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    quest_id, goods_id, quest_type, quest_class, quest_title, quest_text, anser1, anser2, 
+    anser3, anser4, option1, option2, option3, option4, disp_flag, update_date, update_user, 
+    delete_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_quest
+    where quest_id = #{questId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_quest
+    where quest_id = #{questId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fxzoa.insurance.entity.QuestEntity" >
+    insert into t_quest (quest_id, goods_id, quest_type, 
+      quest_class, quest_title, quest_text, 
+      anser1, anser2, anser3, anser4, 
+      option1, option2, option3, option4, 
+      disp_flag, update_date, update_user, 
+      delete_flag)
+    values (#{questId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{questType,jdbcType=CHAR}, 
+      #{questClass,jdbcType=CHAR}, #{questTitle,jdbcType=CHAR}, #{questText,jdbcType=CHAR}, 
+      #{anser1,jdbcType=CHAR}, #{anser2,jdbcType=CHAR}, #{anser3,jdbcType=CHAR}, #{anser4,jdbcType=CHAR}, 
+      #{option1,jdbcType=CHAR}, #{option2,jdbcType=CHAR}, #{option3,jdbcType=CHAR}, #{option4,jdbcType=CHAR}, 
+      #{dispFlag,jdbcType=CHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=CHAR}, 
+      #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fxzoa.insurance.entity.QuestEntity" >
+    insert into t_quest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questId != null" >
+        quest_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="questType != null" >
+        quest_type,
+      </if>
+      <if test="questClass != null" >
+        quest_class,
+      </if>
+      <if test="questTitle != null" >
+        quest_title,
+      </if>
+      <if test="questText != null" >
+        quest_text,
+      </if>
+      <if test="anser1 != null" >
+        anser1,
+      </if>
+      <if test="anser2 != null" >
+        anser2,
+      </if>
+      <if test="anser3 != null" >
+        anser3,
+      </if>
+      <if test="anser4 != null" >
+        anser4,
+      </if>
+      <if test="option1 != null" >
+        option1,
+      </if>
+      <if test="option2 != null" >
+        option2,
+      </if>
+      <if test="option3 != null" >
+        option3,
+      </if>
+      <if test="option4 != null" >
+        option4,
+      </if>
+      <if test="dispFlag != null" >
+        disp_flag,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questId != null" >
+        #{questId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="questType != null" >
+        #{questType,jdbcType=CHAR},
+      </if>
+      <if test="questClass != null" >
+        #{questClass,jdbcType=CHAR},
+      </if>
+      <if test="questTitle != null" >
+        #{questTitle,jdbcType=CHAR},
+      </if>
+      <if test="questText != null" >
+        #{questText,jdbcType=CHAR},
+      </if>
+      <if test="anser1 != null" >
+        #{anser1,jdbcType=CHAR},
+      </if>
+      <if test="anser2 != null" >
+        #{anser2,jdbcType=CHAR},
+      </if>
+      <if test="anser3 != null" >
+        #{anser3,jdbcType=CHAR},
+      </if>
+      <if test="anser4 != null" >
+        #{anser4,jdbcType=CHAR},
+      </if>
+      <if test="option1 != null" >
+        #{option1,jdbcType=CHAR},
+      </if>
+      <if test="option2 != null" >
+        #{option2,jdbcType=CHAR},
+      </if>
+      <if test="option3 != null" >
+        #{option3,jdbcType=CHAR},
+      </if>
+      <if test="option4 != null" >
+        #{option4,jdbcType=CHAR},
+      </if>
+      <if test="dispFlag != null" >
+        #{dispFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fxzoa.insurance.entity.QuestEntity" >
+    update t_quest
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="questType != null" >
+        quest_type = #{questType,jdbcType=CHAR},
+      </if>
+      <if test="questClass != null" >
+        quest_class = #{questClass,jdbcType=CHAR},
+      </if>
+      <if test="questTitle != null" >
+        quest_title = #{questTitle,jdbcType=CHAR},
+      </if>
+      <if test="questText != null" >
+        quest_text = #{questText,jdbcType=CHAR},
+      </if>
+      <if test="anser1 != null" >
+        anser1 = #{anser1,jdbcType=CHAR},
+      </if>
+      <if test="anser2 != null" >
+        anser2 = #{anser2,jdbcType=CHAR},
+      </if>
+      <if test="anser3 != null" >
+        anser3 = #{anser3,jdbcType=CHAR},
+      </if>
+      <if test="anser4 != null" >
+        anser4 = #{anser4,jdbcType=CHAR},
+      </if>
+      <if test="option1 != null" >
+        option1 = #{option1,jdbcType=CHAR},
+      </if>
+      <if test="option2 != null" >
+        option2 = #{option2,jdbcType=CHAR},
+      </if>
+      <if test="option3 != null" >
+        option3 = #{option3,jdbcType=CHAR},
+      </if>
+      <if test="option4 != null" >
+        option4 = #{option4,jdbcType=CHAR},
+      </if>
+      <if test="dispFlag != null" >
+        disp_flag = #{dispFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where quest_id = #{questId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fxzoa.insurance.entity.QuestEntity" >
+    update t_quest
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      quest_type = #{,jdbcType=CHAR},
+      quest_class = #{questClass,jdbcType=CHAR},
+      quest_title = #{questTitle,jdbcType=CHAR},
+      quest_text = #{questText,jdbcType=CHAR},
+      anser1 = #{anser1,jdbcType=CHAR},
+      anser2 = #{anser2,jdbcType=CHAR},
+      anser3 = #{anser3,jdbcType=CHAR},
+      anser4 = #{anser4,jdbcType=CHAR},
+      option1 = #{option1,jdbcType=CHAR},
+      option2 = #{option2,jdbcType=CHAR},
+      option3 = #{option3,jdbcType=CHAR},
+      option4 = #{option4,jdbcType=CHAR},
+      disp_flag = #{dispFlag,jdbcType=CHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=CHAR},
+      delete_flag = #{deleteFlag,jdbcType=CHAR}
+    where quest_id = #{questId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap" parameterType="com.fxzoa.insurance.entity.QuestEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_quest
+    where  1 = 1
+      <if test="goodsId != null" >
+        and goods_id = #{goodsId,jdbcType=INTEGER}
+      </if>
+      <if test="questType != null and questType != ''" >
+        and quest_type = #{questType,jdbcType=CHAR}
+      </if>
+      <if test="questClass != null and questClass != ''" >
+        and quest_class = #{questClass,jdbcType=CHAR}
+      </if>
+      <if test="questTitle != null and questTitle != ''" >
+        and quest_title LIKE '%' || #{questTitle,jdbcType=CHAR} || '%'
+      </if>
+      <if test="questText != null and questText != ''" >
+        and quest_text LIKE '%' || #{questTitle,jdbcType=CHAR} || '%'
+      </if>       
+  </select>
+  
+</mapper>

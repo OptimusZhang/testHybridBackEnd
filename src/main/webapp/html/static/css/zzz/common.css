@@ -1,0 +1,23 @@
+.scale_1_6 {
+    -webkit-transform: scale(1.6,1.6);
+    -moz-transform: scale(1.6,1.6);
+    -ms-transform: scale(1.6,1.6);
+    -o-transform: scale(1.6,1.6);
+    transform: scale(1.6,1.6);
+}
+
+.scale_2_0 {
+    -webkit-transform: scale(2,2);
+    -moz-transform: scale(2,2);
+    -ms-transform: scale(2,2);
+    -o-transform: scale(2,2);
+    transform: scale(2,2);
+}
+
+.scale_1_5 {
+    -webkit-transform: scale(1.5,1.5);
+    -moz-transform: scale(1.5,1.5);
+    -ms-transform: scale(1.5,1.5);
+    -o-transform: scale(1.5,1.5);
+    transform: scale(1.5,1.5);
+}

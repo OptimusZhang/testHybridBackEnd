@@ -1,0 +1,294 @@
+<HTML>
+<HEAD>
+    <META http-equiv="content-type" content="text/html; charset=utf-8">
+	<SCRIPT src="./jquery-1.11.2.min.js"></SCRIPT>
+
+<STYLE>
+	* {
+		margin: 0px;
+		padding: 2px;
+		font-size: 16px;
+		font-family: "Microsoft YaHei";
+	}
+
+	.btn {
+		padding: 8px;
+	    position: fixed;
+		display: none;
+		background-color:yellow; 
+		border:1px solid;
+	}
+
+	.yesno {
+	    position: relative;
+		margin: auto;
+		margin-top: 8px;
+		margin-bottom: 2px;
+		padding: 8px;
+		width: 72px;
+	}
+
+	textarea{
+		background-color: #E0B0FF; 
+		border:1px solid;
+	}
+	
+	.high {
+		color: red;
+	    font-weight: bold;
+		background-color:Lime; 
+	}
+
+	#text1{
+		font-size: 16px;
+	}
+
+	#text2{
+	    position: relative;
+		background-color: #FFFFC2; 
+		font-size: 16px;
+		border:1px solid;
+		width: 656px;
+		height: 186px;
+	}
+
+	#sel_div{
+	    position: absolute;
+		top: 24px;
+	    left: 668px;
+		background-color:pink; 
+		border:1px solid;
+	}
+
+	#clear{
+		width: 48px;
+	}
+
+	#quest{
+	    position: relative;
+	}
+
+	#preview{
+	    position: relative;
+	}
+
+	.row {
+	    position: relative;
+		width: 480px;
+		margin: auto;
+		padding: 4px;
+	}
+	
+	.st{
+		width: 320px;
+		border:1px solid;
+	}
+
+	.ss, .se{
+		width: 32px;
+		border:1px solid;
+	}
+
+	#container{
+		margin: auto;
+		width: 1024px;
+	}
+
+</STYLE>
+
+<SCRIPT>
+	var pvStr = '';
+	var x  = 0;
+	var y  = 0;
+	var st = '';
+	var ss = 0;
+	var se = 0;
+
+	function getSelectionText() {			
+		if(window.getSelection) {
+			return window.getSelection().toString();
+		} else if(document.selection && document.selection.createRange) {
+			return document.selection.createRange().text;
+		}
+		return '';
+	}
+
+	function getUnderbar(i) {
+		return "<span class='high'>{_" + i + "_}</span>";
+	}
+	
+	// 添加选择的项目
+	function addSelectText() {
+		for (var i=1; i<=5; i++){
+			moveSelectText(i);
+			if ($("#ss"+i).val() != "") continue;
+			$("#st"+i).val(st);
+			$("#ss"+i).val(ss);
+			$("#se"+i).val(se);
+			break;
+		}
+	}
+	
+	function moveSelectText(currIdx) {
+		var val = $("#ss"+currIdx).val();
+		if (val == "") return;
+		if (Number(ss) >= Number(val)) return;
+
+		for (var i=5; i>=currIdx; i--){
+			if (i == currIdx) {
+				$("#st"+i).val('');
+				$("#ss"+i).val('');
+				$("#se"+i).val('');
+				break;
+			}
+
+			var firstIdx = i - 1; 
+			if ($("#ss"+firstIdx).val() == "") continue;
+
+			$("#st"+i).val($("#st"+firstIdx).val());
+			$("#ss"+i).val($("#ss"+firstIdx).val());
+			$("#se"+i).val($("#se"+firstIdx).val());
+		}		
+	}
+	
+	function updatePreivew() {
+		pvStr = '';
+		$('#text2').html(pvStr);
+		var str = $("#text1").text();
+		var si   = $("#ss1").val();
+		var ei   = $("#se1").val();
+		getPreviewStr(1, str, si, ei);
+		$('#text2').html(pvStr);
+	}
+
+	function getPreviewStr(i, str, si, ei) {
+		var str1 = str.substring(0, si);
+		var str2 = getUnderbar(i);
+		var str3 = str.substring(ei);
+		var ni = Number(i) + 1;
+		pvStr = pvStr + str1 + str2;
+		if (ni == 6 || $("#st"+ni).val() == ""){
+			pvStr = pvStr + str3;
+			return;
+		}
+		sii = $("#ss"+ni).val()-$("#se"+i).val();
+		eii = $("#se"+ni).val()-$("#se"+i).val();
+		getPreviewStr(ni, str3, sii, eii);
+	}
+
+	// 清除选择的项目
+	function doClear(idx) {		
+		var i = idx;
+		for (; i<5; i++){
+			var ni = Number(i) + Number(1);
+			if ($("#st"+ni).val() == "") break;
+			$("#st"+i).val($("#st"+ni).val());
+			$("#ss"+i).val($("#ss"+ni).val());
+			$("#se"+i).val($("#se"+ni).val());
+		}
+		for (; i<=5; i++){
+			if ($("#st"+i).val() == "") break;
+			$("#st"+i).val('');
+			$("#ss"+i).val('');
+			$("#se"+i).val('');
+		}
+		updatePreivew();
+	}
+
+	function recodeXY(){
+		x = window.event.clientX+4;
+		y = window.event.clientY+4;
+	}
+	
+	$(document).ready(function(){
+		$("#text1").select(function(){
+			st = getSelectionText();
+			ss = this.selectionStart;
+			se = this.selectionEnd;
+			$("#btn").css('left', x+'px');
+			$("#btn").css('top', y+'px');
+			$("#btn").css('display', 'block');
+		});
+
+		$("#yes").click(function(){
+			$("#btn").css('display', 'none');
+			if (st.trim() != ""){
+				addSelectText();
+				updatePreivew();
+			}
+		});
+
+		$("#no").click(function(){
+			$("#btn").css('display', 'none');
+		});
+
+	});
+</SCRIPT> 
+</HEAD>
+
+<BODY onmousemove="recodeXY();">
+
+<div id="container">
+<div id="quest">
+.问题:<br/>
+<textarea id="text1" cols="80" rows="10">
+很少用onselect事件，今天我才发现onselect事件：当选择一段文字的时候触发。
+以前我一直以为onselect和onchange都是
+内option元素切换的时候触发。是我误解了onselect事件。
+</textarea>
+</div>
+
+<div id="preview">
+.预览区<br/>
+<div id="text2"></div>
+<div id="sel_div">
+	<div id="row1" class="row">
+		1:
+		<input type="text" id="st1" name="st1" class="st" value="" readonly>
+		<input type="text" id="ss1" name="ss1" class="ss" value="" readonly>
+		<input type="text" id="se1" name="se1" class="se" value=""  readonly>
+		<input type="button" id="clear" onclick="doClear('1');" value="clear">
+	</div>
+	<div id="row2" class="row">
+		2:
+		<input type="text" id="st2" name="st2"  class="st" value=""  readonly>
+		<input type="text" id="ss2" name="ss2"  class="ss" value=""  readonly>
+		<input type="text" id="se2" name="se2" class="se" value=""  readonly>
+		<input type="button" id="clear" onclick="doClear('2');" value="clear">
+	</div>
+	<div id="row3" class="row">
+		3:
+		<input type="text" id="st3" name="st3"  class="st" value=""  readonly>
+		<input type="text" id="ss3" name="ss3"  class="ss" value=""  readonly>
+		<input type="text" id="se3" name="se3" class="se" value=""  readonly>
+		<input type="button" id="clear" onclick="doClear('3');" value="clear">
+	</div>
+	<div id="row4" class="row">
+		4:
+		<input type="text" id="st4" name="st4"  class="st" value=""  readonly>
+		<input type="text" id="ss4" name="ss4"  class="ss" value=""  readonly>
+		<input type="text" id="se4" name="se4" class="se" value=""  readonly>
+		<input type="button" id="clear" onclick="doClear('4');" value="clear">
+	</div>
+	<div id="row5" class="row">
+		5:
+		<input type="text" id="st5" name="st5"  class="st" value=""  readonly>
+		<input type="text" id="ss5" name="ss5" class="ss" value=""  readonly>
+		<input type="text" id="se5" name="se5" class="se" value=""  readonly>
+		<input type="button" id="clear" onclick="doClear('5');" value="clear">
+	</div>
+</div>
+</div> <!-- preview end -->
+
+</div> <!-- container end -->
+
+<div id="btn" class="btn">
+	<p>您确定要保存当前的选择的内容吗?</p>
+	<div class="yesno">
+		<button type="button" id="yes" class="clear">Yes</button>
+		<button type="button" id="no" class="clear">No</button>
+	</div>
+</div>
+
+</BODY>
+</HTML>
